@@ -1,0 +1,19 @@
+PODS:
+  - OpenSSL (1.0.210)
+  - XTStoreKitHelper (0.1.0)
+
+DEPENDENCIES:
+  - OpenSSL (~> 1.0)
+  - XTStoreKitHelper (from `../`)
+
+EXTERNAL SOURCES:
+  XTStoreKitHelper:
+    :path: ../
+
+SPEC CHECKSUMS:
+  OpenSSL: 246ffb948e9d56466727fd318134af35f5aa764e
+  XTStoreKitHelper: 3eb60539c5eb62c8ee76528beb850b11c603f9f1
+
+PODFILE CHECKSUM: 7cc5d32392b23b22274b26642a3a1b94f7c0b97d
+
+COCOAPODS: 1.4.0.beta.1

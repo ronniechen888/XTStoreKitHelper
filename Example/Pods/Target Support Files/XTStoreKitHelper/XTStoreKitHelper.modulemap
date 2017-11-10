@@ -1,0 +1,6 @@
+framework module XTStoreKitHelper {
+  umbrella header "XTStoreKitHelper-umbrella.h"
+
+  export *
+  module * { export * }
+}

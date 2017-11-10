@@ -8,6 +8,6 @@
 
 @import UIKit;
 
-@interface XTViewController : UIViewController
+@interface XTViewController : UITableViewController
 
 @end

@@ -6,6 +6,7 @@ target 'XTStoreKitHelper_Example' do
   target 'XTStoreKitHelper_Tests' do
     inherit! :search_paths
 
-    pod 'FBSnapshotTestCase'
+#    pod 'FBSnapshotTestCase'
+	pod 'OpenSSL', '~> 1.0'
   end
 end

@@ -7,6 +7,7 @@
 //
 
 #import "XTViewController.h"
+#import "XTStoreKitHelper.h"
 
 @interface XTViewController ()
 
@@ -18,6 +19,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+	
+	[[XTStoreKitHelper sharedStoreHelper] setProductIdentifiers:@[@"com.product.basket001"]];
+	[[XTStoreKitHelper sharedStoreHelper] validateProductsReceiveResponse:^(NSArray<SKProduct *> *products, NSArray<NSString *> *invalidProductIdentifiers) {
+		NSLog(@"111");
+	} receiveFinish:^{
+		
+	} receiveFail:^(NSError *error) {
+		
+	}];
 }
 
 - (void)didReceiveMemoryWarning
