@@ -7,12 +7,16 @@
 //
 
 #import "XTAppDelegate.h"
+#import <XTStoreKitHelper/XTStoreKitHelper.h>
 
 @implementation XTAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+	
+	[[XTStoreKitHelper sharedStoreHelper] addTransactionObserver];
+	
     return YES;
 }
 

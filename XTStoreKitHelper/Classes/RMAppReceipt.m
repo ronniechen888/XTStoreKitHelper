@@ -210,6 +210,19 @@ static NSURL *_appleRootCertificateURL = nil;
     return receipt;
 }
 
++ (NSData *)bundleReceiptData
+{
+	NSURL *URL = [NSBundle mainBundle].appStoreReceiptURL;
+	NSString *path = URL.path;
+	const BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:nil];
+	if (!exists) return nil;
+	
+	NSData *data = [RMAppReceipt dataFromPCKS7Path:path];
+	if (!data) return nil;
+	
+	return data;
+}
+
 + (void)setAppleRootCertificateURL:(NSURL*)url
 {
     _appleRootCertificateURL = url;

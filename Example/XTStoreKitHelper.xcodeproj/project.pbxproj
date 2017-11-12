@@ -24,6 +24,10 @@
 		6267FFE066FF7F52AEA3A3F5 /* Pods_XTStoreKitHelper_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB28F79DCB84206D95EA7A0 /* Pods_XTStoreKitHelper_Example.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		EA9700381FB5E96D0037EBE1 /* AveBorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9700311FB5E96D0037EBE1 /* AveBorderedButton.m */; };
+		EA9700391FB5E96D0037EBE1 /* AveBorderedView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9700321FB5E96D0037EBE1 /* AveBorderedView.m */; };
+		EA97003A1FB5E96D0037EBE1 /* AvePurchaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9700361FB5E96D0037EBE1 /* AvePurchaseButton.m */; };
+		EA97003B1FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9700371FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.m */; };
 		EAA8D69E1FA72C0300263E05 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE7C3041FA70A1B00DDB1E6 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,11 +70,15 @@
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9BFB172F85569BC64BCDCE6D /* Pods_XTStoreKitHelper_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XTStoreKitHelper_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADB28F79DCB84206D95EA7A0 /* Pods_XTStoreKitHelper_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XTStoreKitHelper_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EAA8D69C1FA7284900263E05 /* XTStoreKitHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = XTStoreKitHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EAE7C3031FA70A0E00DDB1E6 /* XTStoreKitHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = XTStoreKitHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA97002F1FB5E96D0037EBE1 /* AveBorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AveBorderedButton.h; sourceTree = "<group>"; };
+		EA9700301FB5E96D0037EBE1 /* AveBorderedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AveBorderedView.h; sourceTree = "<group>"; };
+		EA9700311FB5E96D0037EBE1 /* AveBorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AveBorderedButton.m; sourceTree = "<group>"; };
+		EA9700321FB5E96D0037EBE1 /* AveBorderedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AveBorderedView.m; sourceTree = "<group>"; };
+		EA9700341FB5E96D0037EBE1 /* AvePurchaseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvePurchaseButton.h; sourceTree = "<group>"; };
+		EA9700351FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvePurchaseActivityIndicatorView.h; sourceTree = "<group>"; };
+		EA9700361FB5E96D0037EBE1 /* AvePurchaseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvePurchaseButton.m; sourceTree = "<group>"; };
+		EA9700371FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvePurchaseActivityIndicatorView.m; sourceTree = "<group>"; };
 		EAE7C3041FA70A1B00DDB1E6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		EAE7C3071FA70A2900DDB1E6 /* XTStoreKitHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = XTStoreKitHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EAE7C3091FA712A800DDB1E6 /* XTStoreKitHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = XTStoreKitHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E65C3FC6574FF0EC9FC48C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		FB94C9CEB36ACB59B24917FF /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,11 +145,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EAA8D69C1FA7284900263E05 /* XTStoreKitHelper.framework */,
-				EAE7C3091FA712A800DDB1E6 /* XTStoreKitHelper.framework */,
-				EAE7C3071FA70A2900DDB1E6 /* XTStoreKitHelper.framework */,
 				EAE7C3041FA70A1B00DDB1E6 /* StoreKit.framework */,
-				EAE7C3031FA70A0E00DDB1E6 /* XTStoreKitHelper.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
@@ -155,6 +159,7 @@
 		6003F593195388D20070C39A /* Example for XTStoreKitHelper */ = {
 			isa = PBXGroup;
 			children = (
+				EA97002D1FB5E96D0037EBE1 /* AvePurchaseButton */,
 				6003F59C195388D20070C39A /* XTAppDelegate.h */,
 				6003F59D195388D20070C39A /* XTAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -206,6 +211,37 @@
 				FB94C9CEB36ACB59B24917FF /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		EA97002D1FB5E96D0037EBE1 /* AvePurchaseButton */ = {
+			isa = PBXGroup;
+			children = (
+				EA97002E1FB5E96D0037EBE1 /* BorderedButton */,
+				EA9700331FB5E96D0037EBE1 /* PurchaseButton */,
+			);
+			path = AvePurchaseButton;
+			sourceTree = "<group>";
+		};
+		EA97002E1FB5E96D0037EBE1 /* BorderedButton */ = {
+			isa = PBXGroup;
+			children = (
+				EA97002F1FB5E96D0037EBE1 /* AveBorderedButton.h */,
+				EA9700301FB5E96D0037EBE1 /* AveBorderedView.h */,
+				EA9700311FB5E96D0037EBE1 /* AveBorderedButton.m */,
+				EA9700321FB5E96D0037EBE1 /* AveBorderedView.m */,
+			);
+			path = BorderedButton;
+			sourceTree = "<group>";
+		};
+		EA9700331FB5E96D0037EBE1 /* PurchaseButton */ = {
+			isa = PBXGroup;
+			children = (
+				EA9700341FB5E96D0037EBE1 /* AvePurchaseButton.h */,
+				EA9700351FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.h */,
+				EA9700361FB5E96D0037EBE1 /* AvePurchaseButton.m */,
+				EA9700371FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.m */,
+			);
+			path = PurchaseButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,11 +378,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-XTStoreKitHelper_Tests/Pods-XTStoreKitHelper_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
+				"${BUILT_PRODUCTS_DIR}/AvePurchaseButton/AvePurchaseButton.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AvePurchaseButton.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -427,8 +463,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* XTAppDelegate.m in Sources */,
+				EA9700381FB5E96D0037EBE1 /* AveBorderedButton.m in Sources */,
 				6003F5A7195388D20070C39A /* XTViewController.m in Sources */,
+				EA97003A1FB5E96D0037EBE1 /* AvePurchaseButton.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				EA9700391FB5E96D0037EBE1 /* AveBorderedView.m in Sources */,
+				EA97003B1FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,7 +619,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J3JB3WZ6R5;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/XTStoreKitHelper\"",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XTStoreKitHelper/XTStoreKitHelper-Prefix.pch";
 				INFOPLIST_FILE = "XTStoreKitHelper/XTStoreKitHelper-Info.plist";
@@ -603,7 +648,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J3JB3WZ6R5;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/XTStoreKitHelper\"",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XTStoreKitHelper/XTStoreKitHelper-Prefix.pch";
 				INFOPLIST_FILE = "XTStoreKitHelper/XTStoreKitHelper-Info.plist";

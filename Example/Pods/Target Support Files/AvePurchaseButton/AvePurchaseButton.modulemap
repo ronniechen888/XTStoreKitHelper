@@ -1,0 +1,6 @@
+framework module AvePurchaseButton {
+  umbrella header "AvePurchaseButton-umbrella.h"
+
+  export *
+  module * { export * }
+}

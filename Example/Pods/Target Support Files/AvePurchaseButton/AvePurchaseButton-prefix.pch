@@ -10,9 +10,3 @@
 #endif
 #endif
 
-#import "RMAppReceipt.h"
-#import "XTStoreKitHelper.h"
-
-FOUNDATION_EXPORT double XTStoreKitHelperVersionNumber;
-FOUNDATION_EXPORT const unsigned char XTStoreKitHelperVersionString[];
-

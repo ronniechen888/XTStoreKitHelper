@@ -269,7 +269,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 #else
 	NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
 #endif
-	RMAppReceipt *newReceipt = [RMAppReceipt bundleReceipt];
+	NSData *newReceipt = [RMAppReceipt bundleReceiptData];
 	NSArray *savedReceipts = [storage arrayForKey:@"receipts"];
 	if (!savedReceipts) {
 		// Storing the first receipt

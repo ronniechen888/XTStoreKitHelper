@@ -8,5 +8,6 @@ target 'XTStoreKitHelper_Example' do
 
 #    pod 'FBSnapshotTestCase'
 	pod 'OpenSSL', '~> 1.0'
+    pod 'AvePurchaseButton', '~> 1.0'
   end
 end

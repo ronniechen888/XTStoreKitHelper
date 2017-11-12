@@ -97,6 +97,8 @@ __attribute__((availability(ios,introduced=7.0)))
  */
 + (RMAppReceipt*)bundleReceipt;
 
++ (NSData *)bundleReceiptData;
+
 /**
  Sets the url of the Apple Root certificate that will be used to verifiy the signature of the bundle receipt. If none is provided, the resource AppleIncRootCertificate.cer will be used. If no certificate is available, no signature verification will be performed.
  @param url The url of the Apple Root certificate.
