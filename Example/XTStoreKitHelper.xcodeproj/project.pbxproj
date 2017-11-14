@@ -24,11 +24,15 @@
 		6267FFE066FF7F52AEA3A3F5 /* Pods_XTStoreKitHelper_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB28F79DCB84206D95EA7A0 /* Pods_XTStoreKitHelper_Example.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		EA57E9661FB98F2E0058D98A /* timg-5.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = EA57E9641FB98F2D0058D98A /* timg-5.jpeg */; };
+		EA57E9671FB98F2E0058D98A /* timg-4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = EA57E9651FB98F2D0058D98A /* timg-4.jpeg */; };
 		EA9700381FB5E96D0037EBE1 /* AveBorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9700311FB5E96D0037EBE1 /* AveBorderedButton.m */; };
 		EA9700391FB5E96D0037EBE1 /* AveBorderedView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9700321FB5E96D0037EBE1 /* AveBorderedView.m */; };
 		EA97003A1FB5E96D0037EBE1 /* AvePurchaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9700361FB5E96D0037EBE1 /* AvePurchaseButton.m */; };
 		EA97003B1FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9700371FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.m */; };
 		EAA8D69E1FA72C0300263E05 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE7C3041FA70A1B00DDB1E6 /* StoreKit.framework */; };
+		EAD70C101FBAC32C00BBA713 /* XTDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD70C0E1FBAC32C00BBA713 /* XTDownloadViewController.m */; };
+		EAD70C111FBAC32C00BBA713 /* XTDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAD70C0F1FBAC32C00BBA713 /* XTDownloadViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +74,10 @@
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9BFB172F85569BC64BCDCE6D /* Pods_XTStoreKitHelper_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XTStoreKitHelper_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADB28F79DCB84206D95EA7A0 /* Pods_XTStoreKitHelper_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XTStoreKitHelper_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA57E95E1FB98D020058D98A /* StoreContent */ = {isa = PBXFileReference; explicitFileType = folder; includeInIndex = 0; path = StoreContent; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA57E9601FB98D020058D98A /* ContentInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ContentInfo.plist; sourceTree = "<group>"; };
+		EA57E9641FB98F2D0058D98A /* timg-5.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "timg-5.jpeg"; sourceTree = "<group>"; };
+		EA57E9651FB98F2D0058D98A /* timg-4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "timg-4.jpeg"; sourceTree = "<group>"; };
 		EA97002F1FB5E96D0037EBE1 /* AveBorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AveBorderedButton.h; sourceTree = "<group>"; };
 		EA9700301FB5E96D0037EBE1 /* AveBorderedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AveBorderedView.h; sourceTree = "<group>"; };
 		EA9700311FB5E96D0037EBE1 /* AveBorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AveBorderedButton.m; sourceTree = "<group>"; };
@@ -78,6 +86,9 @@
 		EA9700351FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvePurchaseActivityIndicatorView.h; sourceTree = "<group>"; };
 		EA9700361FB5E96D0037EBE1 /* AvePurchaseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvePurchaseButton.m; sourceTree = "<group>"; };
 		EA9700371FB5E96D0037EBE1 /* AvePurchaseActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvePurchaseActivityIndicatorView.m; sourceTree = "<group>"; };
+		EAD70C0D1FBAC32C00BBA713 /* XTDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XTDownloadViewController.h; sourceTree = "<group>"; };
+		EAD70C0E1FBAC32C00BBA713 /* XTDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XTDownloadViewController.m; sourceTree = "<group>"; };
+		EAD70C0F1FBAC32C00BBA713 /* XTDownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XTDownloadViewController.xib; sourceTree = "<group>"; };
 		EAE7C3041FA70A1B00DDB1E6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F5E65C3FC6574FF0EC9FC48C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		FB94C9CEB36ACB59B24917FF /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -127,6 +138,7 @@
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* Example for XTStoreKitHelper */,
 				6003F5B5195388D20070C39A /* Tests */,
+				EA57E95F1FB98D020058D98A /* StoreContent */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
 				4AF55D8E5A95CAEF78D402A8 /* Pods */,
@@ -138,6 +150,7 @@
 			children = (
 				6003F58A195388D20070C39A /* XTStoreKitHelper_Example.app */,
 				6003F5AE195388D20070C39A /* XTStoreKitHelper_Tests.xctest */,
+				EA57E95E1FB98D020058D98A /* StoreContent */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,6 +181,9 @@
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				EAD70C0D1FBAC32C00BBA713 /* XTDownloadViewController.h */,
+				EAD70C0E1FBAC32C00BBA713 /* XTDownloadViewController.m */,
+				EAD70C0F1FBAC32C00BBA713 /* XTDownloadViewController.xib */,
 			);
 			name = "Example for XTStoreKitHelper";
 			path = XTStoreKitHelper;
@@ -211,6 +227,16 @@
 				FB94C9CEB36ACB59B24917FF /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		EA57E95F1FB98D020058D98A /* StoreContent */ = {
+			isa = PBXGroup;
+			children = (
+				EA57E9651FB98F2D0058D98A /* timg-4.jpeg */,
+				EA57E9641FB98F2D0058D98A /* timg-5.jpeg */,
+				EA57E9601FB98D020058D98A /* ContentInfo.plist */,
+			);
+			path = StoreContent;
 			sourceTree = "<group>";
 		};
 		EA97002D1FB5E96D0037EBE1 /* AvePurchaseButton */ = {
@@ -288,6 +314,21 @@
 			productReference = 6003F5AE195388D20070C39A /* XTStoreKitHelper_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		EA57E95D1FB98D020058D98A /* StoreContent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA57E9631FB98D020058D98A /* Build configuration list for PBXNativeTarget "StoreContent" */;
+			buildPhases = (
+				EA57E95C1FB98D020058D98A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StoreContent;
+			productName = StoreContent;
+			productReference = EA57E95E1FB98D020058D98A /* StoreContent */;
+			productType = "com.apple.product-type.in-app-purchase-content";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -309,6 +350,11 @@
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
+					EA57E95D1FB98D020058D98A = {
+						CreatedOnToolsVersion = 9.1;
+						DevelopmentTeam = J3JB3WZ6R5;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 6003F585195388D10070C39A /* Build configuration list for PBXProject "XTStoreKitHelper" */;
@@ -326,6 +372,7 @@
 			targets = (
 				6003F589195388D20070C39A /* XTStoreKitHelper_Example */,
 				6003F5AD195388D20070C39A /* XTStoreKitHelper_Tests */,
+				EA57E95D1FB98D020058D98A /* StoreContent */,
 			);
 		};
 /* End PBXProject section */
@@ -337,6 +384,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				EAD70C111FBAC32C00BBA713 /* XTDownloadViewController.xib in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -347,6 +395,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA57E95C1FB98D020058D98A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA57E9661FB98F2E0058D98A /* timg-5.jpeg in Resources */,
+				EA57E9671FB98F2E0058D98A /* timg-4.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +519,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAD70C101FBAC32C00BBA713 /* XTDownloadViewController.m in Sources */,
 				6003F59E195388D20070C39A /* XTAppDelegate.m in Sources */,
 				EA9700381FB5E96D0037EBE1 /* AveBorderedButton.m in Sources */,
 				6003F5A7195388D20070C39A /* XTViewController.m in Sources */,
@@ -716,6 +774,49 @@
 			};
 			name = Release;
 		};
+		EA57E9611FB98D020058D98A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiaoting Chen (J3JB3WZ6R5)";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = J3JB3WZ6R5;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = StoreContent/ContentInfo.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/InAppPurchaseContent";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = "";
+			};
+			name = Debug;
+		};
+		EA57E9621FB98D020058D98A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiaoting Chen (J3JB3WZ6R5)";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = J3JB3WZ6R5;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = StoreContent/ContentInfo.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/InAppPurchaseContent";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -742,6 +843,15 @@
 			buildConfigurations = (
 				6003F5C3195388D20070C39A /* Debug */,
 				6003F5C4195388D20070C39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA57E9631FB98D020058D98A /* Build configuration list for PBXNativeTarget "StoreContent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA57E9611FB98D020058D98A /* Debug */,
+				EA57E9621FB98D020058D98A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

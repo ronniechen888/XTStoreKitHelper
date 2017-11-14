@@ -17,6 +17,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 @property (nonatomic,copy) NSArray *productIdArray;
 @property (nonatomic,strong) SKProductsRequest *request;
 @property (nonatomic,assign) CheckReceiptType checkType;
+@property (nonatomic,strong) SKReceiptRefreshRequest *receiptRefreshRequest;
 
 ///validate process block
 @property (nonatomic,copy) void (^validatResponse)(NSArray<SKProduct *> *products,NSArray<NSString *> *invalidProductIdentifiers);
@@ -30,9 +31,21 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 @property (nonatomic,copy) void (^purchasedProcess)(CheckReceiptResult result,SKPaymentTransaction *transaction);
 @property (nonatomic,copy) void (^restoredProcess)(SKPaymentTransaction *transaction);
 
+///download state handle
+@property (nonatomic,copy) void (^downloadStateActiveHandle)(SKDownload *download);
+@property (nonatomic,copy) void (^downloadStateCancelledHandle)(SKDownload *download);
+@property (nonatomic,copy) void (^downloadStateFailedHandle)(SKDownload *download);
+@property (nonatomic,copy) void (^downloadStateFinishedHandle)(SKDownload *download);
+@property (nonatomic,copy) void (^downloadStatePausedHandle)(SKDownload *download);
+@property (nonatomic,copy) void (^downloadStateWaitingHandle)(SKDownload *download);
+
 ///properties
 @property (nonatomic,strong) NSString *bundleIdentifier;
 @property (nonatomic,strong) NSString *bundleVersion;
+
+///Handle Receipt Refresh Request
+@property (nonatomic,copy) void (^refreshSuccessHandle)(void);
+@property (nonatomic,copy) void (^refreshFailedHandle)(void);
 
 @end
 
@@ -104,6 +117,10 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 	return [SKPaymentQueue canMakePayments];
 }
 
+-(void)finishTransaction:(SKPaymentTransaction *)transaction{
+	[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+}
+
 #pragma mark - SKProductsRequestDelegate
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
@@ -114,18 +131,32 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 }
 
 - (void)requestDidFinish:(SKRequest *)request{
-	if(self.validatDidFinish){
-		self.validatDidFinish();
+	if (request == self.request) {
+		if(self.validatDidFinish){
+			self.validatDidFinish();
+		}
+		NSLog(@"Product request finished");
+	}else if(request == self.receiptRefreshRequest){
+		if (self.refreshSuccessHandle) {
+			self.refreshSuccessHandle();
+		}
 	}
-	NSLog(@"Product request finished");
+	
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error{
-	if(self.validatDidFail)
-	{
-		self.validatDidFail(error);
+
+	if (request == self.request) {
+		if(self.validatDidFail)
+		{
+			self.validatDidFail(error);
+		}
+		NSLog(@"Product request failed");
+	}else if(request == self.receiptRefreshRequest){
+		if (self.refreshFailedHandle) {
+			self.refreshFailedHandle();
+		}
 	}
-	NSLog(@"Product request failed");
 }
 
 #pragma mark - Begin Buy Process
@@ -187,81 +218,6 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 }
 
 
-#pragma mark - SKPaymentTransactionObserver
-- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
-{
-	for (SKPaymentTransaction *transaction in transactions) {
-		switch (transaction.transactionState) {
-				// Call the appropriate custom method for the transaction state.
-			case SKPaymentTransactionStatePurchasing:
-				if (self.purchasingProcess) {
-					self.purchasingProcess(transaction);
-				}
-				break;
-			case SKPaymentTransactionStateDeferred:
-				if (self.deferredProcess) {
-					self.deferredProcess(transaction);
-				}
-				break;
-			case SKPaymentTransactionStateFailed:
-				if (self.failedProcess) {
-					self.failedProcess(transaction);
-				}
-				[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-				break;
-			case SKPaymentTransactionStatePurchased:
-			{
-				
-				if (self.checkType == CheckReceiptTypeLocal) {
-					///For security,we need to verify the receipt.
-					[self localVerifyTransaction:transaction inReceipt:[RMAppReceipt bundleReceipt] success:^{
-						[self saveReceiptToCloudOrUserDefault];
-						if (self.purchasedProcess) {
-							self.purchasedProcess(CheckReceiptResultYes,transaction);
-						}
-					} failure:^(NSError *error) {
-						if (self.purchasedProcess) {
-							self.purchasedProcess(CheckReceiptResultNo,transaction);
-						}
-					}];
-				}else if (self.checkType == CheckReceiptTypeAppStore){
-					[self appstoreVerifyReceiptSuccess:^{
-						[self saveReceiptToCloudOrUserDefault];
-						
-						if (self.purchasedProcess) {
-							self.purchasedProcess(CheckReceiptResultYes,transaction);
-						}
-					} failure:^(NSError *error) {
-						if (self.purchasedProcess) {
-							self.purchasedProcess(CheckReceiptResultNo,transaction);
-						}
-					}];
-				}else{
-					if (self.purchasedProcess) {
-						self.purchasedProcess(CheckReceiptResultNoneCheck,transaction);
-					}
-				}
-				
-				[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-			}
-				
-				break;
-			case SKPaymentTransactionStateRestored:
-
-				if (self.restoredProcess) {
-					self.restoredProcess(transaction);
-				}
-				[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-				break;
-			default:
-		
-				NSLog(@"Unexpected transaction state %@",
-					  @(transaction.transactionState));
-			break; 
-		}
-	}
-}
-
 -(void)saveReceiptToCloudOrUserDefault
 {
 #if USE_ICLOUD_STORAGE
@@ -282,6 +238,11 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 	[storage synchronize];
 }
 
+-(BOOL)checkReceiptIsIncludeProduct:(SKProduct *)product{
+	RMAppReceipt *receipt = [RMAppReceipt bundleReceipt];
+	
+	return [receipt containsInAppPurchaseOfProductIdentifier:product.productIdentifier];
+}
 
 
 #pragma mark - Verify Receipt By Local
@@ -376,7 +337,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 		return;
 	}
 	static NSString *receiptDataKey = @"receipt-data";
-	NSDictionary *jsonReceipt = @{receiptDataKey : [receipt base64EncodedDataWithOptions:0]};
+	NSDictionary *jsonReceipt = @{receiptDataKey : [receipt base64EncodedStringWithOptions:0]};
 	
 	NSError *error;
 	NSData *requestData = [NSJSONSerialization dataWithJSONObject:jsonReceipt options:0 error:&error];
@@ -469,6 +430,215 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 		
 		[task resume];
 	});
+}
+
+#pragma mark - Refresh Receipt Request
+-(void)refreshReceiptOnSuccess:(void (^)(void))successHandle failed:(void (^)(void))failedHandle
+{
+	self.refreshSuccessHandle = successHandle;
+	self.refreshFailedHandle = failedHandle;
+	self.receiptRefreshRequest = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:@{}];
+	self.receiptRefreshRequest.delegate = self;
+	[self.receiptRefreshRequest start];
+}
+
+#pragma mark - Manage Host Content
+-(void)setDownloadStateWaiting:(void (^)(SKDownload *))downloadStateWaiting active:(void (^)(SKDownload *))downloadStateActive paused:(void (^)(SKDownload *))downloadStatePaused finished:(void (^)(SKDownload *))downloadStateFinished failed:(void (^)(SKDownload *))downloadStateFailed cancelled:(void (^)(SKDownload *))downloadStateCancelled{
+	self.downloadStateWaitingHandle = downloadStateWaiting;
+	self.downloadStateActiveHandle = downloadStateActive;
+	self.downloadStatePausedHandle = downloadStatePaused;
+	self.downloadStateFinishedHandle = downloadStateFinished;
+	self.downloadStateFailedHandle = downloadStateFailed;
+	self.downloadStateCancelledHandle = downloadStateCancelled;
+}
+
+-(void)startDownloads:(NSArray<SKDownload *> *)downloads{
+	[[SKPaymentQueue defaultQueue] startDownloads:downloads];
+}
+
+-(void)pauseDownloads:(NSArray<SKDownload *> *)downloads{
+	[[SKPaymentQueue defaultQueue] pauseDownloads:downloads];
+}
+
+-(void)resumeDownloads:(NSArray<SKDownload *> *)downloads{
+	[[SKPaymentQueue defaultQueue] resumeDownloads:downloads];
+}
+
+-(void)cancelDownloads:(NSArray<SKDownload *> *)downloads{
+	[[SKPaymentQueue defaultQueue] cancelDownloads:downloads];
+}
+
+-(NSMutableArray<NSString *> *)getDownloadFilePathArrayFromDownload:(SKDownload *)download
+{
+	NSString *source = [download.contentURL relativePath];
+	NSDictionary *dict = [[NSMutableDictionary alloc] initWithContentsOfFile:[source stringByAppendingPathComponent:@"ContentInfo.plist"]];
+	
+	NSMutableArray<NSString *> *fileArray = [NSMutableArray<NSString *> array];
+	
+	if (![dict objectForKey:@"Files"])
+	{
+		return fileArray;
+	}
+	
+	NSAssert([dict objectForKey:@"Files"], @"The Files property must be valid");
+	
+	for (NSString *file in (NSArray *)[dict objectForKey:@"Files"])
+	{
+		NSString *content = [[source stringByAppendingPathComponent:@"Contents"] stringByAppendingPathComponent:file];
+		if ([[NSFileManager defaultManager] fileExistsAtPath:content]) {
+			[fileArray addObject:content];
+		}
+	}
+	
+	return fileArray;
+}
+
+#pragma mark - SKPaymentTransactionObserver
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+{
+	for (SKPaymentTransaction *transaction in transactions) {
+		switch (transaction.transactionState) {
+				// Call the appropriate custom method for the transaction state.
+			case SKPaymentTransactionStatePurchasing:
+				if (self.purchasingProcess) {
+					self.purchasingProcess(transaction);
+				}
+				break;
+			case SKPaymentTransactionStateDeferred:
+				if (self.deferredProcess) {
+					self.deferredProcess(transaction);
+				}
+				break;
+			case SKPaymentTransactionStateFailed:
+				if (self.failedProcess) {
+					self.failedProcess(transaction);
+				}
+				[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+				break;
+			case SKPaymentTransactionStatePurchased:
+			{
+				
+				if (self.checkType == CheckReceiptTypeLocal) {
+					///For security,we need to verify the receipt.
+					[self localVerifyTransaction:transaction inReceipt:[RMAppReceipt bundleReceipt] success:^{
+						[self saveReceiptToCloudOrUserDefault];
+						if (self.purchasedProcess) {
+							self.purchasedProcess(CheckReceiptResultYes,transaction);
+						}
+					} failure:^(NSError *error) {
+						[self refreshReceiptOnSuccess:^{
+							[self saveReceiptToCloudOrUserDefault];
+							if (self.purchasedProcess) {
+								self.purchasedProcess(CheckReceiptResultYes,transaction);
+							}
+						} failed:^{
+							if (self.purchasedProcess) {
+								self.purchasedProcess(CheckReceiptResultNo,transaction);
+							}
+						}];
+						
+					}];
+				}else if (self.checkType == CheckReceiptTypeAppStore){
+					[self appstoreVerifyReceiptSuccess:^{
+						[self saveReceiptToCloudOrUserDefault];
+						
+						if (self.purchasedProcess) {
+							self.purchasedProcess(CheckReceiptResultYes,transaction);
+						}
+					} failure:^(NSError *error) {
+						[self refreshReceiptOnSuccess:^{
+							[self saveReceiptToCloudOrUserDefault];
+							if (self.purchasedProcess) {
+								self.purchasedProcess(CheckReceiptResultYes,transaction);
+							}
+						} failed:^{
+							if (self.purchasedProcess) {
+								self.purchasedProcess(CheckReceiptResultNo,transaction);
+							}
+						}];
+					}];
+				}else{
+					if (self.purchasedProcess) {
+						self.purchasedProcess(CheckReceiptResultNoneCheck,transaction);
+					}
+			
+				}
+				
+//				[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+			}
+				
+				break;
+			case SKPaymentTransactionStateRestored:
+				
+				if (self.restoredProcess) {
+					self.restoredProcess(transaction);
+				}
+				[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+				break;
+			default:
+				
+				NSLog(@"Unexpected transaction state %@",
+					  @(transaction.transactionState));
+				break; 
+		}
+	}
+}
+
+-(void)paymentQueue:(SKPaymentQueue *)queue updatedDownloads:(NSArray<SKDownload *> *)downloads
+{
+	for (SKDownload *download in downloads)
+	{
+		switch (download.downloadState)
+		{
+			case SKDownloadStateActive:
+			{
+				if (self.downloadStateActiveHandle) {
+					self.downloadStateActiveHandle(download);
+				}
+				break;
+			}
+				
+			case SKDownloadStateCancelled: 
+			{ 
+				if (self.downloadStateCancelledHandle) {
+					self.downloadStateCancelledHandle(download);
+				}
+				break; 
+			}
+				
+			case SKDownloadStateFailed:
+			{
+				if (self.downloadStateFailedHandle) {
+					self.downloadStateFailedHandle(download);
+				}
+				break;
+			}
+				
+			case SKDownloadStateFinished:
+			{
+				if (self.downloadStateFinishedHandle) {
+					self.downloadStateFinishedHandle(download);
+				}
+				break;
+			}
+				
+			case SKDownloadStatePaused:
+			{
+				if (self.downloadStatePausedHandle) {
+					self.downloadStatePausedHandle(download);
+				}
+				break;
+			}
+				
+			case SKDownloadStateWaiting:
+			{
+				if (self.downloadStateWaitingHandle) {
+					self.downloadStateWaitingHandle(download);
+				}
+				break;
+			}
+		}
+	}
 }
 
 @end

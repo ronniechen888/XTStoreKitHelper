@@ -9,6 +9,7 @@
 #import "XTViewController.h"
 #import <XTStoreKitHelper/XTStoreKitHelper.h>
 #import "AvePurchaseButton.h"
+#import "XTDownloadViewController.h"
 
 @interface XTViewController ()
 @property (nonatomic,strong) NSMutableArray *productArray;
@@ -76,22 +77,35 @@
 				[button setButtonState:AvePurchaseButtonStateConfirmation animated:YES];
 			} purchased:^(CheckReceiptResult result, SKPaymentTransaction *transaction) {
 				if (result == CheckReceiptResultYes) {
-					NSLog(@"111");
+				
 					[button setButtonState:AvePurchaseButtonStateNormal animated:NO];
 					[button setButtonState:AvePurchaseButtonStateConfirmation animated:YES];
 					button.confirmationTitle = @"已购买";
+					
+			
+					if ([transaction.downloads count] > 0) {
+						XTDownloadViewController *downloadViewController = [[XTDownloadViewController alloc] initWithNibName:@"XTDownloadViewController" bundle:nil];
+						downloadViewController.transaction = transaction;
+						[self.navigationController pushViewController:downloadViewController animated:YES];
+					}else{
+						[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction];
+					}
 				}else if(result == CheckReceiptResultNo){
 					NSLog(@"222");
 					
 					UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"警告" message:@"凭据有异常！" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
 					[alertView show];
+					
+					[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction];
 				}else{
 					NSLog(@"333");
+					
+					[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction];
 				}
 			} restored:^(SKPaymentTransaction *transaction) {
 				NSLog(@"444");
 			}];
-			[[XTStoreKitHelper sharedStoreHelper] buyProduct:product quantity:1 userAccount:nil startProcess:nil canNotPay:nil checkReceiptType:CheckReceiptTypeLocal];
+			[[XTStoreKitHelper sharedStoreHelper] buyProduct:product quantity:1 userAccount:nil startProcess:nil canNotPay:nil checkReceiptType:CheckReceiptTypeAppStore];
 		}
 			break;
 			
@@ -140,6 +154,11 @@
 	button.confirmationTitle = @"BUY";
 	[button sizeToFit];
 	
+	if ([[XTStoreKitHelper sharedStoreHelper] checkReceiptIsIncludeProduct:product]) {
+		button.buttonState = AvePurchaseButtonStateConfirmation;
+		button.confirmationTitle = @"已购买";
+	}
+	
 	// if the item at this indexPath is being "busy" with purchasing, update the purchase
 	// button's state to reflect so.
 	if([_busyIndexes containsIndex:indexPath.row] == YES)
@@ -151,6 +170,10 @@
 	return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	
+}
 
 
 @end
