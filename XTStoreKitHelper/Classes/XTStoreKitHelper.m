@@ -9,6 +9,12 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "RMAppReceipt.h"
 
+#ifndef __OPTIMIZE__   
+#define XTLog(...) NSLog(__VA_ARGS__)   
+#else   
+#define XTLog(...) {}   
+#endif
+
 NSString *const RMStoreErrorDomain = @"net.robotmedia.store";
 NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 
@@ -134,7 +140,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 	if(self.validatResponse){
 		self.validatResponse(response.products, response.invalidProductIdentifiers);
 	}
-	NSLog(@"Product request receive response");
+	XTLog(@"Product request receive response");
 }
 
 - (void)requestDidFinish:(SKRequest *)request{
@@ -142,7 +148,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 		if(self.validatDidFinish){
 			self.validatDidFinish();
 		}
-		NSLog(@"Product request finished");
+		XTLog(@"Product request finished");
 	}else if(request == self.receiptRefreshRequest){
 		if (self.refreshSuccessHandle) {
 			self.refreshSuccessHandle();
@@ -158,7 +164,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 		{
 			self.validatDidFail(error);
 		}
-		NSLog(@"Product request failed");
+		XTLog(@"Product request failed");
 	}else if(request == self.receiptRefreshRequest){
 		if (self.refreshFailedHandle) {
 			self.refreshFailedHandle();
@@ -208,7 +214,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 	// Confirm that the length of the user name is small enough
 	// to be recast when calling the hash function.
 	if (accountNameLen > UINT32_MAX) {
-		NSLog(@"Account name too long to hash: %@", userAccountName);
+		XTLog(@"Account name too long to hash: %@", userAccountName);
 		return nil; 
 	}
 	CC_SHA256(accountName, (CC_LONG)accountNameLen, hashedChars);
@@ -394,7 +400,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 				NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
 				if (!responseJSON)
 				{
-					NSLog(@"Failed To Parse Server Response");
+					XTLog(@"Failed To Parse Server Response");
 					if (failureBlock != nil)
 					{
 						failureBlock(jsonError);
@@ -415,7 +421,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 				}
 				else if (statusCode == sandboxCode)
 				{
-					NSLog(@"Verifying Sandbox Receipt");
+					XTLog(@"Verifying Sandbox Receipt");
 					// From: https://developer.apple.com/library/ios/#technotes/tn2259/_index.html
 					// See also: http://stackoverflow.com/questions/9677193/ios-storekit-can-i-detect-when-im-in-the-sandbox
 					// Always verify your receipt first with the production URL; proceed to verify with the sandbox URL if you receive a 21007 status code. Following this approach ensures that you do not have to switch between URLs while your application is being tested or reviewed in the sandbox or is live in the App Store.
@@ -425,7 +431,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 				}
 				else
 				{
-					NSLog(@"Verification Failed With Code %ld", (long)statusCode);
+					XTLog(@"Verification Failed With Code %ld", (long)statusCode);
 					NSError *serverError = [NSError errorWithDomain:RMStoreErrorDomain code:statusCode userInfo:nil];
 					if (failureBlock != nil)
 					{
@@ -596,7 +602,7 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 				break;
 			default:
 				
-				NSLog(@"Unexpected transaction state %@",
+				XTLog(@"Unexpected transaction state %@",
 					  @(transaction.transactionState));
 				break; 
 		}
