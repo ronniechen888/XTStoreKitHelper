@@ -109,7 +109,54 @@ cancelled:(void (^)(SKDownload *download))downloadStateCancelled;
 /// 当你的产品购买成功时，你需要手动的去结束这个交易。
 - (void)finishTransaction:(SKPaymentTransaction *)transaction finishedHandle:(void (^)(SKPaymentTransaction *transaction))finishedHandle;
 ```
+## Demo Code
+### To test the demo,you need to use the demo account: ronniechen123@123.com and password: Github123 .
+```objective-c
+SKProduct *product = [_productArray objectAtIndex:indexPath.row];
+[[XTStoreKitHelper sharedStoreHelper] setPayProcessPurchasing:^(SKPaymentTransaction *transaction) {
+NSLog(@"purchasing");
+} deferred:^(SKPaymentTransaction *transaction) {
+NSLog(@"deferred");
+} failed:^(SKPaymentTransaction *transaction) {
+NSLog(@"failed");
+[button setButtonState:AvePurchaseButtonStateNormal animated:NO];
+[button setButtonState:AvePurchaseButtonStateConfirmation animated:YES];
+} purchased:^(CheckReceiptResult result, SKPaymentTransaction *transaction) {
+if (result == CheckReceiptResultYes) {
 
+[button setButtonState:AvePurchaseButtonStateNormal animated:NO];
+[button setButtonState:AvePurchaseButtonStateConfirmation animated:YES];
+button.confirmationTitle = @"已购买";
+
+
+if ([transaction.downloads count] > 0) {
+XTDownloadViewController *downloadViewController = [[XTDownloadViewController alloc] initWithNibName:@"XTDownloadViewController" bundle:nil];
+downloadViewController.transaction = transaction;
+[self.navigationController pushViewController:downloadViewController animated:YES];
+}else{
+[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction finishedHandle:^(SKPaymentTransaction *transaction) {
+NSLog(@"Finish transaction");
+}];
+}
+}else if(result == CheckReceiptResultNo){
+
+UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"警告" message:@"凭据有异常！" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+[alertView show];
+
+[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction finishedHandle:^(SKPaymentTransaction *transaction) {
+NSLog(@"Finish transaction");
+}];
+}else{
+
+[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction finishedHandle:^(SKPaymentTransaction *transaction) {
+NSLog(@"Finish transaction");
+}];
+}
+} restored:^(SKPaymentTransaction *transaction) {
+NSLog(@"444");
+}];
+[[XTStoreKitHelper sharedStoreHelper] buyProduct:product quantity:1 userAccount:nil startProcess:nil canNotPay:nil checkReceiptType:CheckReceiptTypeAppStore];
+```
 ## Author
 
 ronniechen888, 576892817@qq.com
