@@ -53,6 +53,8 @@ typedef enum : NSUInteger {
 		canNotPay:(void (^)(void))canNotPayBlock
  checkReceiptType:(CheckReceiptType)checkType;
 
+- (void)saveReceiptToCloudOrUserDefault;
+
 - (BOOL)checkReceiptIsIncludeProduct:(SKProduct *)product;
 
 ///Download Host Content
@@ -62,12 +64,15 @@ typedef enum : NSUInteger {
 					   finished:(void (^)(SKDownload *download))downloadStateFinished
 						 failed:(void (^)(SKDownload *download))downloadStateFailed
 					  cancelled:(void (^)(SKDownload *download))downloadStateCancelled;
-- (void)startDownloads:(NSArray<SKDownload *> *)downloads NS_AVAILABLE_IOS(6_0);
-- (void)pauseDownloads:(NSArray<SKDownload *> *)downloads NS_AVAILABLE_IOS(6_0);
-- (void)resumeDownloads:(NSArray<SKDownload *> *)downloads NS_AVAILABLE_IOS(6_0);
-- (void)cancelDownloads:(NSArray<SKDownload *> *)downloads NS_AVAILABLE_IOS(6_0);
+- (void)startDownloads:(NSArray<SKDownload *> *)downloads;
+- (void)pauseDownloads:(NSArray<SKDownload *> *)downloads;
+- (void)resumeDownloads:(NSArray<SKDownload *> *)downloads;
+- (void)cancelDownloads:(NSArray<SKDownload *> *)downloads;
 - (NSMutableArray<NSString *> *)getDownloadFilePathArrayFromDownload:(SKDownload *)download;
 
-///finish transaction
-- (void)finishTransaction:(SKPaymentTransaction *)transaction;
+///Restore transaction
+- (void)restoreCompletedTransactionsWithApplicationUsername:(NSString *)username success:(void (^)(void))successHandle failed:(void (^)(NSError *error))failedHandle;
+
+///Finish transaction
+- (void)finishTransaction:(SKPaymentTransaction *)transaction finishedHandle:(void (^)(SKPaymentTransaction *transaction))finishedHandle;
 @end

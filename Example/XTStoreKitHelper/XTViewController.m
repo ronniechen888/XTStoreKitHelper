@@ -41,6 +41,14 @@
 	} receiveFail:^(NSError *error) {
 		
 	}];
+	
+	UIButton *restoreButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+	[restoreButton setTitle:@"Restore" forState:UIControlStateNormal];
+	[restoreButton setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
+	[restoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+	[restoreButton addTarget:self action:@selector(restore) forControlEvents:UIControlEventTouchUpInside];
+	[self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:restoreButton]];
+	
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,19 +96,23 @@
 						downloadViewController.transaction = transaction;
 						[self.navigationController pushViewController:downloadViewController animated:YES];
 					}else{
-						[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction];
+						[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction finishedHandle:^(SKPaymentTransaction *transaction) {
+							NSLog(@"Finish transaction");
+						}];
 					}
 				}else if(result == CheckReceiptResultNo){
-					NSLog(@"222");
-					
+				
 					UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"警告" message:@"凭据有异常！" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
 					[alertView show];
 					
-					[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction];
+					[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction finishedHandle:^(SKPaymentTransaction *transaction) {
+						NSLog(@"Finish transaction");
+					}];
 				}else{
-					NSLog(@"333");
 					
-					[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction];
+					[[XTStoreKitHelper sharedStoreHelper] finishTransaction:transaction finishedHandle:^(SKPaymentTransaction *transaction) {
+						NSLog(@"Finish transaction");
+					}];
 				}
 			} restored:^(SKPaymentTransaction *transaction) {
 				NSLog(@"444");
@@ -175,5 +187,12 @@
 	
 }
 
+-(void)restore{
+	[[XTStoreKitHelper sharedStoreHelper] restoreCompletedTransactionsWithApplicationUsername:nil success:^{
+		NSLog(@"Restore Success");
+	} failed:^(NSError *error) {
+		NSLog(@"Restore Failed");
+	}];
+}
 
 @end

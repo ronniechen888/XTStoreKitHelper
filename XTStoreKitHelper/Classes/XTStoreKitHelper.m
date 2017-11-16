@@ -47,6 +47,12 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 @property (nonatomic,copy) void (^refreshSuccessHandle)(void);
 @property (nonatomic,copy) void (^refreshFailedHandle)(void);
 
+///Handle Restore Action
+@property (nonatomic,copy) void (^restoreSuccessHandle)(void);
+@property (nonatomic,copy) void (^restoreFailedHandle)(NSError *error);
+
+///Handle Remove Transaction
+@property (nonatomic,copy) void (^removeFinishedTransaction)(SKPaymentTransaction *transaction);
 @end
 
 @implementation XTStoreKitHelper
@@ -117,8 +123,9 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 	return [SKPaymentQueue canMakePayments];
 }
 
--(void)finishTransaction:(SKPaymentTransaction *)transaction{
+-(void)finishTransaction:(SKPaymentTransaction *)transaction finishedHandle:(void (^)(SKPaymentTransaction *))finishedHandle{
 	[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+	self.removeFinishedTransaction = finishedHandle;
 }
 
 #pragma mark - SKProductsRequestDelegate
@@ -493,6 +500,19 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 	return fileArray;
 }
 
+#pragma mark - Restore Transaction
+-(void)restoreCompletedTransactionsWithApplicationUsername:(NSString *)username success:(void (^)(void))successHandle failed:(void (^)(NSError *))failedHandle
+{
+	if (username.length > 0) {
+		[[SKPaymentQueue defaultQueue] restoreCompletedTransactionsWithApplicationUsername:username];
+	}else{
+		[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+	}
+	
+	self.restoreSuccessHandle = successHandle;
+	self.restoreFailedHandle = failedHandle;
+}
+
 #pragma mark - SKPaymentTransactionObserver
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
 {
@@ -521,13 +541,13 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 				if (self.checkType == CheckReceiptTypeLocal) {
 					///For security,we need to verify the receipt.
 					[self localVerifyTransaction:transaction inReceipt:[RMAppReceipt bundleReceipt] success:^{
-						[self saveReceiptToCloudOrUserDefault];
+						
 						if (self.purchasedProcess) {
 							self.purchasedProcess(CheckReceiptResultYes,transaction);
 						}
 					} failure:^(NSError *error) {
 						[self refreshReceiptOnSuccess:^{
-							[self saveReceiptToCloudOrUserDefault];
+						
 							if (self.purchasedProcess) {
 								self.purchasedProcess(CheckReceiptResultYes,transaction);
 							}
@@ -540,14 +560,13 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 					}];
 				}else if (self.checkType == CheckReceiptTypeAppStore){
 					[self appstoreVerifyReceiptSuccess:^{
-						[self saveReceiptToCloudOrUserDefault];
 						
 						if (self.purchasedProcess) {
 							self.purchasedProcess(CheckReceiptResultYes,transaction);
 						}
 					} failure:^(NSError *error) {
 						[self refreshReceiptOnSuccess:^{
-							[self saveReceiptToCloudOrUserDefault];
+							
 							if (self.purchasedProcess) {
 								self.purchasedProcess(CheckReceiptResultYes,transaction);
 							}
@@ -641,4 +660,25 @@ NSInteger const RMStoreErrorCodeUnableToCompleteVerification = 200;
 	}
 }
 
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+	if (self.restoreFailedHandle) {
+		self.restoreFailedHandle(error);
+	}
+}
+
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue{
+	if (self.restoreSuccessHandle) {
+		self.restoreSuccessHandle();
+	}
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue removedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+{
+	if (self.removeFinishedTransaction) {
+		for (SKPaymentTransaction *transaction in transactions) {
+			self.removeFinishedTransaction(transaction);
+		}
+	}
+}
 @end

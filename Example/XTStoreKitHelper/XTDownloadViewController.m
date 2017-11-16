@@ -34,7 +34,9 @@
 		UIImage *image = [UIImage imageWithContentsOfFile: [fileArray firstObject]];
 		self.topView.image = image;
 		
-		[[XTStoreKitHelper sharedStoreHelper] finishTransaction:_transaction];
+		[[XTStoreKitHelper sharedStoreHelper] finishTransaction:_transaction finishedHandle:^(SKPaymentTransaction *transaction) {
+			NSLog(@"Finished transaction");
+		}];
 	} failed:^(SKDownload *download) {
 		self.statusLabel.text = [NSString stringWithFormat:@"Download Failed"];
 		
@@ -46,7 +48,9 @@
 	} cancelled:^(SKDownload *download) {
 		self.statusLabel.text = [NSString stringWithFormat:@"Download Cancelled"];
 		
-		[[XTStoreKitHelper sharedStoreHelper] finishTransaction:_transaction];
+		[[XTStoreKitHelper sharedStoreHelper] finishTransaction:_transaction finishedHandle:^(SKPaymentTransaction *transaction) {
+			NSLog(@"Finished transaction");
+		}];
 	}];
 }
 
