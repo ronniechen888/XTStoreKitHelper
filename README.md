@@ -153,7 +153,7 @@ NSLog(@"Finish transaction");
 }];
 }
 } restored:^(SKPaymentTransaction *transaction) {
-NSLog(@"444");
+
 }];
 [[XTStoreKitHelper sharedStoreHelper] buyProduct:product quantity:1 userAccount:nil startProcess:nil canNotPay:nil checkReceiptType:CheckReceiptTypeAppStore];
 ```
